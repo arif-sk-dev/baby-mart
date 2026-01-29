@@ -1,0 +1,33 @@
+{
+  "info": {
+    "_postman_id": "5571edeb-d8f2-4377-855c-b6e6849caa64",
+    "name": "baby_mart_yt",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "id": "a3ff1d1e-6f51-445b-a6de-f314d567d6b6",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "id": "58739a75-fa12-47c6-afba-b2ffab0ad6ca",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}
