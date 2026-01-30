@@ -4,7 +4,7 @@ import User from "../models/userModel.js";
 
 const loginUser = asyncHandler(async (req, res) => {
   // res.send("login is working!!!");
-  const { email, password } = req.body;
+  const { email, password } = await req.body;
   console.log("Login attempt:", { email });
 
   const user = await User.findOne({ email });
@@ -46,6 +46,8 @@ const registerUser = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       role: user.role,
       addresses: user.addresses,
+      // Token (JWT)
+      
     });
   } else {
     res.status(400);
