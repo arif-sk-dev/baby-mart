@@ -1,9 +1,32 @@
 // control login
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
-const loginUser = (req, res) => {
-  res.send("login is working!!!");
-};
+
+const loginUser = asyncHandler(async (req, res) => {
+  // res.send("login is working!!!");
+  const { email, password } = req.body;
+  console.log("Login attempt:", { email });
+
+  const user = await User.findOne({ email });
+
+  if (user && (user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      role: user.role,
+      addresses: user.addresses || [],
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password.");
+  }
+});
+
+// const loginUser = (req, res) => {
+//   const {email, password} = await req.body
+// };
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -15,7 +38,7 @@ const registerUser = asyncHandler(async (req, res) => {
     role,
     addresses: [],
   });
-  if(user) {
+  if (user) {
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -34,4 +57,3 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 export { loginUser, registerUser };
-
