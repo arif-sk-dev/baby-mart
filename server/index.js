@@ -2,6 +2,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
+import connectDB from "./config/db.js";
 
 // load env Server
 dotenv.config();
@@ -11,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Connect to Database
+connectDB();
 
 // Core's configuration
 

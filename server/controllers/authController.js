@@ -5,9 +5,11 @@ const loginUser = (req, res)=> {
 };
 
 const registerUser = asyncHandler(async(req, res)=> {
-  const bodyProps = req.body;
-  res.send("Register is working");
-  console.log(bodyProps);
+  const {name, email, password, role} = req.body;
+  // const bodyProps = req.body;
+  // res.send("Register is working");
+  // console.log(bodyProps);
+  console.log(name, email, password, role);
 });
 
 export {loginUser, registerUser};
