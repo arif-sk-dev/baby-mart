@@ -75,5 +75,4 @@ userSchema.pre("save", async function(next) {
 // Ensure only one address is default
 
 const User = mongoose.model("User", userSchema);
-
 export default User;
