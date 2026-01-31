@@ -81,5 +81,12 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 // Logout User
+const logoutUser = asyncHandler(async (req, res) => {
+  res.json({
+    success: true,
+    message: "Logged out successfully!",
+  });
+  // Make token expired upon Logout
+});
 
-export { loginUser, registerUser, getUserProfile };
+export { loginUser, registerUser, getUserProfile, logoutUser };
