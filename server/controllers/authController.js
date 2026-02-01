@@ -87,6 +87,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     message: "Logged out successfully!",
   });
   // Make token expired upon Logout
+  
 });
 
 export { loginUser, registerUser, getUserProfile, logoutUser };
