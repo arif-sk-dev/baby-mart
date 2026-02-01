@@ -3,18 +3,28 @@
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
-import CommonLayout from "./components/common/CommonLayout"
-import { Button } from "./components/ui/button"
+import { Navigate, Outlet } from "react-router";
+// import CommonLayout from "./components/common/CommonLayout"
+import Sidebar from "./components/dashboard/Sidebar";
+import Header from "./components/common/Header";
+import { cn } from "./lib/utils";
 
 function App() {
+  const isAuthenticated = true;
+
+  if(!isAuthenticated) {
+    return <Navigate to={"/login"} />
+  }
 
   return (
-    <div>
-      <CommonLayout>
-        <h2>Admin Panel</h2>
-        <p>Baby mart E-commerce</p>
-        <Button className="text-2xl p-5 hover:bg-gray-300 hover:text-black transition duration-200">Button</Button>
-      </CommonLayout>
+    <div className="h-screen flex bg-zinc-100">
+      <Sidebar />
+      <div className={cn("flex flex-col bg-red-200 flex-1 hoverEffect max-w-[--breakpoint-2xl] ml-64")}>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }

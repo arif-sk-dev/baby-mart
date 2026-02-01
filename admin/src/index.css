@@ -293,4 +293,7 @@ button:focus-visible {
   button {
     @apply cursor-pointer;
   }
+  .hoverEffect{
+    @apply transition-all duration-300 ease-in-out;
+  }
 }
