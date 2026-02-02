@@ -10,7 +10,7 @@ import Header from "./components/common/Header";
 import { cn } from "./lib/utils";
 
 function App() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   if(!isAuthenticated) {
     return <Navigate to={"/login"} />
