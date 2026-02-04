@@ -23,10 +23,16 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: "user",
+    }
   })
 
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     console.log("register data:", data);
     // TODO: API call here
     setTimeout(() => {
@@ -73,17 +79,6 @@ const RegisterPage = () => {
                 <Input id="role" type="role" placeholder="User" {...register("role")} disabled={isLoading} className="border-gray-300 bg-gray-100 text-gray-500" />
                 {errors.role && <FieldError>{errors.role.message}</FieldError>}
               </Field>
-
-              {/* <Field>
-                <FieldLabel>Role</FieldLabel>
-                <select id="role" {...register("role")} disabled={isLoading} >
-                  <option value="">Select role</option>
-                  <option value="admin">Admin</option>
-                  <option value="user">User</option>
-                  <option value="delivery">Delivery</option>
-                  {errors.role && <FieldError>{errors.role.message}</FieldError>}
-                </select>
-              </Field> */}
             </FieldSet>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
