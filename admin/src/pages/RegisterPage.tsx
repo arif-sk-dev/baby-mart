@@ -10,12 +10,14 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { registerSchema } from "@/lib/validation"
+import useAuthStore from "@/store/useAuthStore"
 
 type FormData = z.infer<typeof registerSchema>
 
 const RegisterPage = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const {register: registerUser} = useAuthStore();
 
   const {
     register,
@@ -28,21 +30,31 @@ const RegisterPage = () => {
       email: "",
       password: "",
       role: "user",
-    }
-  })
+    },
+  });
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
-    console.log("register data:", data);
+    // console.log("register data:", data);
     // TODO: API call here
-    setTimeout(() => {
-      setIsLoading(false)
-      navigate("/dashboard")
-    }, 1500)
+    // setTimeout(() => {
+    //   setIsLoading(false)
+    //   navigate("/dashboard")
+    // }, 1500)
+    try {
+      await registerUser(data);
+        console.log("Registration successful:");
+        navigate("/login");
+      
+    } catch (error) {
+      console.log("Fail to register", error);
+      
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500">
+    // <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-400 via-zinc-300 to-green-200">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -76,7 +88,7 @@ const RegisterPage = () => {
 
               <Field>
                 <FieldLabel htmlFor="role">Role</FieldLabel>
-                <Input id="role" type="role" placeholder="User" {...register("role")} disabled={isLoading} className="border-gray-300 bg-gray-100 text-gray-500" />
+                <Input id="role" type="text" placeholder="User" {...register("role")} disabled={isLoading} className="border-gray-300 bg-gray-100 text-gray-500" />
                 {errors.role && <FieldError>{errors.role.message}</FieldError>}
               </Field>
             </FieldSet>
