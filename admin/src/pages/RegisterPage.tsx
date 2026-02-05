@@ -49,6 +49,8 @@ const RegisterPage = () => {
     } catch (error) {
       console.log("Fail to register", error);
       
+    } finally {
+      setIsLoading(false);
     }
   };
 

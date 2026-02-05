@@ -36,7 +36,7 @@ const useAuthStore = create<AuthState>()(
 
       register: async (userData) => {
         try {
-          await api.post("/auth/register", userData);
+          // await api.post("/auth/register", userData);
           const res = await api.post("/auth/register", userData);
           const {user, token} = res.data;
           set({user, token, isAuthenticated: true});

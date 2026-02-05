@@ -6,7 +6,7 @@ import type { AxiosInstance, AxiosResponse } from "axios";
 // configuration utility for Admin API
 interface AdminApiConfig{
   baseURL: string;
-  isProduction: boolean;
+  isProduction: boolean; 
 }
 
 // Get API Configuration for Admin
