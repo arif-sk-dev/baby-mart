@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import connectDB from "./config/db.js";
+import cors from "cors";
 
 // load env Server
 dotenv.config();
@@ -15,7 +16,22 @@ const PORT = process.env.PORT || 8000;
 connectDB();
 
 // Core's configuration
+const allowedOrigins = [process.env.ADMIN_UR].filter(Boolean); // Remove any undefined values
 
+app.use(cors({
+  origin: function(origin, callback){
+    // Allow requests with no origin (mobile app,curl request)
+    if(!origin) return callback(null, true);
+    // In dev mode> allow all origin for easier testing
+    if(process.env.NODE_ENV==="development") {
+      return callback(null, true);
+    }
+    // Production cases
+  },
+  credentials:true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTION"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 // Middleware
 // Increase body size limit for JSON & URL-encoded payloads
