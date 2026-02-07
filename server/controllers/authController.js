@@ -13,6 +13,11 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     role,
     addresses: [],
+    //avatar added
+    // avatar: {
+    //   type: String,
+    //   default: "uploads/default-avatar.png",
+    // }
   });
   if (user) {
     res.status(201).json({

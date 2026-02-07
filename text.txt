@@ -7,18 +7,18 @@ create 3 subfolder: admin, client & server
 
 to go any directory "cd admin" / cd client / cd server
 
- 
+ 
 ADMIN:
-	cd admin
-	
+ 	cd admin
+ 
 
 CLIENT:
-	cd client
+ 	cd client
 
 
 SERVER:
-	cd server
-	npm init
+ 	cd server
+ 	npm init
 
 arifs@ARIF-PC MINGW64 /e/project/full-stack/baby-mart/server
 $ npm init
@@ -45,23 +45,22 @@ type: (commonjs)
 About to write to E:\project\full-stack\baby-mart\server\package.json:
 
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "arif",
-  "license": "ISC",
-  "type": "commonjs"
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "arif",
+  "license": "ISC",
+  "type": "commonjs"
 }
 
 
 Is this OK? (yes) yes
 
 
-$ node
 $ node
 Welcome to Node.js v24.11.1.
 Hello World!
@@ -78,99 +77,125 @@ arifs@ARIF-PC MINGW64 /e/project/full-stack/baby-mart/server
 $ node index.js
 Hello from Server!
 
-npm i nodemon 
+npm i nodemon
 
-to run the server: npm start 
+to run the server: npm start
 
 "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
-    "dev": "nodemon index.js"
-  },
-
-
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js"
+  },
 
 
 ADMIN:
-	npm i (to install all npm init in admin"
-	install tailwind in admin
+ 	npm i (to install all npm init in admin"
+ 	install tailwind in admin
 
 
-SERVER: 
-	npm install express --save 
-	in package.json file change this "type": "commonjs" to "type": "module"
-	change the index.js file const express = require('express'); to import express from "express"; 
+SERVER:
+ 	npm install express --save
+ 	in package.json file change this "type": "commonjs" to "type": "module"
+ 	change the index.js file const express = require('express'); to import express from "express";
 
-	create server .env file & set: 
-		PORT = 8000
-		MONGODB_URI=
-		JWT_SECRET=
-		CLOUDINARY_API_KEY=
-		CLOUDINARY_API_SECRET=
-		ADMIN_URL=http://localhost:5173/
-		CLIENT_URL=http://localhost:3000/
+ 	create server .env file & set:
+ 		PORT = 8000
+ 		MONGODB_URI=
+ 		JWT_SECRET=
+ 		CLOUDINARY_API_KEY=
+ 		CLOUDINARY_API_SECRET=
+ 		ADMIN_URL=http://localhost:5173/
+ 		CLIENT_URL=http://localhost:3000/
 
-	go to npm & search the dotenv > then install this npm i dotenv > 
-	import dotenv from "dotenv"; > dotenv.config(); (index.js file)   // load env Server 
+ 	go to npm & search the dotenv > then install this npm i dotenv >
+ 	import dotenv from "dotenv"; > dotenv.config(); (index.js file)   // load env Server
 
 
-SERVER: 
-	server> index.js file configuration
-	// load env Server
-	// Connect to Database
-	// Core's configuration
-	// Increase body size limit for JSON & URL-encoded payloads 
-	// Routes
-	// API Documentation
-	// Home Route
-	// Error Handler
-	// Start Server setup
+SERVER:
+ 	server> index.js file configuration
+ 	// load env Server
+ 	// Connect to Database
+ 	// Core's configuration
+ 	// Increase body size limit for JSON & URL-encoded payloads
+ 	// Routes
+ 	// API Documentation
+ 	// Home Route
+ 	// Error Handler
+ 	// Start Server setup
 
-Install Postman (to check server req & res): collection > new collection > send request & check the output. 
+Install Postman (to check server req & res): collection > new collection > send request & check the output.
 
-SERVER: 
-	create routes>authRoutes.js file and configure this file. 
-	install express-async-handler  npm i express-async-handler (to post registerUser & loginUser)
- 
-	authController.js file: 
-	const registerUser = asyncHandler(async(req,res)=> {
-  const bodyProps = req.body;
-  res.send("Register is working");
-	console.log(bodyProps);
-}) 
+SERVER:
+ 	create routes>authRoutes.js file and configure this file.
+ 	install express-async-handler  npm i express-async-handler (to post registerUser & loginUser)
+ 
+ 	authController.js file:
+ 	const registerUser = asyncHandler(async(req,res)=> {
+  const bodyProps = req.body;
+  res.send("Register is working");
+ 	console.log(bodyProps);
+})
 
 then index.js file: // Increase body size limit for JSON & URL-encoded payloads.
-	app.use(express.json()); 
+ 	app.use(express.json());
 
 
 MONGODB:
-	create an account in mongodb.com
-	set Database user admin and pass: admin/any password
-	set Network access to 0.0.0.0/0 
-	go to Cluster and click Connect > Compass > (copy) mongodb+srv://admin:<db_password>@cluster0.kql6mr4.mongodb.net/ 
-	Then set this link to project .env file (MONGODB_URI="mongodb+srv://admin:Arif1990@cluster0.kql6mr4.mongodb.net/baby-mart?retryWrites=true&w=majority&appName=Cluster0")
-	Install Mongoose from NPM > npm i mongoose 
+ 	create an account in mongodb.com
+ 	set Database user admin and pass: admin/any password
+ 	set Network access to 0.0.0.0/0
+ 	go to Cluster and click Connect > Compass > (copy) mongodb+srv://admin:<db_password>@cluster0.kql6mr4.mongodb.net/
+ 	Then set this link to project .env file (MONGODB_URI="mongodb+srv://admin:Arif1990@cluster0.kql6mr4.mongodb.net/baby-mart?retryWrites=true&w=majority&appName=Cluster0")
+ 	Install Mongoose from NPM > npm i mongoose
 Connect MONGODB:  in db.js file > import mongoose from "mongoose";
 
 const connectDB = async()=> {
-  try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
-    console.log( `MongoDB is Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`Error: ${error?.message}`);
-    process.exit(1);
-  }
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    console.log( `MongoDB is Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error?.message}`);
+    process.exit(1);
+  }
 }
 
-export default connectDB; 
+export default connectDB;
 
 in index.js file >
 // Connect to Database
 connectDB();
 
+userModel.js: 
+	// Match user entered password to hashed password in database
+
+	// Encrypt password using bcryptJS
+	npm i bcryptjs (install) 
+	
+
+authController.js:  
+	// token
+	npm i jsonwebtoken (install JWT token)
+	create generateToken.js file & logic.
 
 
+ADMIN (frontend):
+	implement shadcn,
+	vite project Edit tsconfig.json file > Edit tsconfig.app.json file > npm install -D @types/node > Update viteConfig.ts > npx shadcn@latest init
+	
+	Install React Router > npm i react-router
+	main.tsx file > import { createBrowserRouter } from "react-router";
+	import { RouterProvider } from "react-router/dom";
 
-
-
+	create Signin and Registration file,
+	install ZUSTAND   npm install zustand
+	create file store > useAuthStore.ts (to store signin & reg info in database).
+	
+	create a file to integrate api:  lib > api.ts & config.ts 
+	install axios from npm:   npm i axios 
+	create .env file,
+	
+SEVER:  to prevent this error "Access to XMLHttpRequest at 'http://localhost:8000/api/auth/register' from origin 'http://localhost:5173' has been blocked by 	CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested 	resource." 
+	install CORS from npm, npm i cors 
+	Server > index.js file Core's configuration.
+	Now in registration page, fill up this form and click register button, then the register process done.
 
