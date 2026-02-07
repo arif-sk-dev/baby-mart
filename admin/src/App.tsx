@@ -9,9 +9,11 @@ import Sidebar from "./components/dashboard/Sidebar";
 import Header from "./components/common/Header";
 import { cn } from "./lib/utils";
 import useAuthStore from "./store/useAuthStore";
+import { useState } from "react";
 
 function App() {
   const isAuthenticated = useAuthStore((state)=> state.isAuthenticated);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   if(!isAuthenticated) {
     return <Navigate to={"/login"} />
@@ -19,8 +21,8 @@ function App() {
 
   return (
     <div className="h-screen flex bg-zinc-100">
-      <Sidebar />
-      <div className={cn("flex flex-col bg-red-200 flex-1 hoverEffect max-w-[--breakpoint-2xl] ml-64")}>
+      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+      <div className={cn("flex flex-col flex-1 hoverEffect max-w-[--breakpoint-2xl] ml-64")}>
         <Header />
         <main>
           <Outlet />

@@ -8,7 +8,7 @@ interface User {
   name: string,
   email: string,
   avatar: string,
-  role: "admin" | "user" | "deliveryman"
+  role: "admin" | "user" | "deliveryman",
 }
 
 interface AuthState {
@@ -81,3 +81,4 @@ const useAuthStore = create<AuthState>()(
 
 export default useAuthStore
 
+ 

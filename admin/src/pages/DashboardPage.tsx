@@ -7,7 +7,7 @@ const DashboardPage = () => {
   const {logout}=useAuthStore();
 
   return (
-    <div>
+    <div className="p-10">
       <Button variant={"destructive"} onClick={()=>logout()} >
         Logout
       </Button>
@@ -16,3 +16,4 @@ const DashboardPage = () => {
 }
 
 export default DashboardPage
+
