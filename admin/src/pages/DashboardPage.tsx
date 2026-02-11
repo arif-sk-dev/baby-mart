@@ -11,6 +11,7 @@ const DashboardPage = () => {
       {/* <Button variant={"destructive"} onClick={()=>logout()} >
         Logout
       </Button> */}
+      Dashboard 
     </div>
   )
 }

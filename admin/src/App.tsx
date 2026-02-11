@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="h-screen flex bg-zinc-100">
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-      <div className={cn("flex flex-col flex-1 hoverEffect max-w-[--breakpoint-2xl] ml-64")}>
+      <div className={cn("flex flex-col flex-1 hoverEffect max-w-[--breakpoint-2xl]", sidebarOpen? "ml-64" : "ml-20")}>
         <Header />
         <main>
           <Outlet />
