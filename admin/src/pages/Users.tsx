@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import type { User, UserType } from "../../type";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 
 const Users = () => {
@@ -146,7 +147,14 @@ const Users = () => {
         </Table>
       </div>
       {/* Add user Modal  */}
-      
+      <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+        <DialogContent className="sm:max-w-137 max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add Users</DialogTitle>
+            <DialogDescription>Create a new user account</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
