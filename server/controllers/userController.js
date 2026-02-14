@@ -9,7 +9,6 @@ const getUsers = asyncHandler(async (req, res) => {
 
 export { getUsers };
 
-
 // Create user (ADMIN)
 export const createUser = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -39,10 +38,34 @@ export const createUser = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       role: user.role,
       addresses: user.addresses,
-    })
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
   }
 });
 
+// Delete user (ADMIN)
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+
+    // Delete user's cart
+    // await Cart.deleteOne({userId: user._id});
+
+    // Delete user's orders (if any exist)
+    // await OverconstrainedError.deleteMany({userId:user._id});
+
+    // Delete the user
+  }
+
+  await user.deleteOne();
+
+  res.status(200).json({
+    message: "User deleted successfully",
+    userId: req.params.id,
+  });
+});
