@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from 'sonner';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Label } from "@/components/ui/label";
 
 
 type FormData = z.infer<typeof userSchema>
@@ -242,6 +243,12 @@ const Users = () => {
     }
   };
 
+  // View User Details
+  const handleView=(user:User) => {
+    setSelectedUser(user);
+    setIsViewModalOpen(true);
+  }
+
   return (
     <div className="p-6 space-y-4">
       <div className="flex justify-between items-center">
@@ -311,7 +318,9 @@ const Users = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Button variant={"ghost"} size="icon" title="View user details" className="border-border">
+                    <Button variant={"ghost"} size="icon" title="View user details" className="border-border"
+                    onClick={()=>handleView(user)}
+                    >
                       <Eye />
                     </Button>
                     <Button
@@ -477,26 +486,6 @@ const Users = () => {
                 </Select>
               </Field>
 
-              {/* Role - Fixed version */}
-              {/* <Field>
-                <FieldLabel>Role</FieldLabel>
-                <Select
-                  value={formEdit.watch("role")}
-                  onValueChange={(value) =>
-                    formEdit.setValue("role", value as editFormData["role"])
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="user">User</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="deliveryman">Delivery Man</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field> */}
-
               {/* Avatar */}
               <Field>
                 <FieldLabel>Avatar</FieldLabel>
@@ -546,6 +535,66 @@ const Users = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* View User Dialog */}
+      <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>User Details</DialogTitle>
+            <DialogDescription>
+              View complete user information
+            </DialogDescription>
+          </DialogHeader>
+          {selectedUser && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="h-20 w-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold shadow-sm overflow-hidden">
+                  {selectedUser.avatar ? (
+                    <img
+                      src={selectedUser.avatar}
+                      alt={selectedUser.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-2xl">
+                      {selectedUser.name.charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {selectedUser.name}
+                  </h3>
+                  <p className="text-gray-600">{selectedUser.email}</p>
+                  <Badge
+                    className={cn(
+                      "capitalize mt-2",
+                      getRoleColor(selectedUser.role)
+                    )}
+                  >
+                    {selectedUser.role}
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">
+                    User ID
+                  </Label>
+                  <p className="text-lg font-semibold">{selectedUser._id}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">
+                    Created At
+                  </Label>
+                  <p>{new Date(selectedUser.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
