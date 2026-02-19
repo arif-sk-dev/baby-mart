@@ -504,7 +504,7 @@ const Users = () => {
 
                 <Button type="submit" disabled={formLoading}>
                   {formLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Update
+                  Update User
                 </Button>
               </div>
             </FieldSet>

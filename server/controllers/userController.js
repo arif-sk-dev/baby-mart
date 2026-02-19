@@ -1,6 +1,7 @@
 // userController.js
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import cloudinary from "../config/cloudinary.js";
 
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({}).select("-password");
@@ -9,7 +10,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
 export { getUsers };
 
-// Create user (ADMIN)
+//✅ Create user (ADMIN)
 export const createUser = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -20,13 +21,36 @@ export const createUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
+  let avatar = "";
+
+  // if (req.file) {
+  //   const result = await cloudinary.uploader.upload(req.file.path, {
+  //     folder: "babymart/avatars",
+  //   });
+  //   avatar = result.secure_url;
+  // }
+
+  if (req.file && req.file.path) {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "babymart/avatars",
+      });
+      avatar = result.secure_url;
+    } catch (err) {
+      console.error("Cloudinary upload failed:", err);
+      res.status(500);
+      throw new Error("Avatar upload failed. Check Cloudinary settings.");
+    }
+  }
+
   // if user not exist (create new user)
   const user = await User.create({
     name,
     email,
     password,
     role,
-    avatar: req.file ? req.file.path : "",
+    // avatar: req.file ? req.file.path : "",
+    avatar: avatar,
   });
 
   // res.status(201).json(user);
@@ -45,7 +69,7 @@ export const createUser = asyncHandler(async (req, res) => {
   }
 });
 
-// Delete user (ADMIN)
+//✅ Delete user (ADMIN)
 export const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -70,7 +94,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
   });
 });
 
-// Update User (ADMIN) 
+// ✅ Update User (ADMIN)
 
 export const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
@@ -94,8 +118,54 @@ export const updateUser = asyncHandler(async (req, res) => {
   user.role = req.body.role ?? user.role;
   user.addresses = req.body.addresses || user.addresses;
 
-  if (req.file) {
-    user.avatar = `/uploads/${req.file.filename}`;
+  // Image setup
+  // if(req.body.avatar && req.body.avatar !== user.avatar) {
+  //   // Upload user to Cloudinary
+  //   const result = await cloudinary.uploader.upload(req.body.avatar, {
+  //     folder: "babymart/avatars",
+  //   });
+  //   console.log("Avatar Result", result);
+
+  //   user.avatar = result.secure_url; // Save the secure URL from Cloudinary
+  // }
+
+  // if (req.file) {
+  //   user.avatar = `/uploads/${req.file.filename}`;
+  // }
+
+  // AVATAR UPLOAD
+  // if (req.file) {
+  //   const result = await cloudinary.uploader.upload(req.file.path, {
+  //     folder: "babymart/avatars",
+  //   });
+
+  //   user.avatar = result.secure_url;
+  // }
+
+  // const updatedUser = await user.save();
+
+  // res.status(200).json({
+  //   _id: updatedUser._id,
+  //   name: updatedUser.name,
+  //   email: updatedUser.email,
+  //   role: updatedUser.role,
+  //   avatar: updatedUser.avatar,
+  //   addresses: updatedUser.addresses,
+  // });
+
+  // AVATAR UPLOAD
+  try {
+    if (req.file && req.file.path) {
+      console.log("Updating avatar file:", req.file.path);
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "babymart/avatars",
+      });
+      user.avatar = result.secure_url;
+    }
+  } catch (err) {
+    console.error("Cloudinary upload error:", err);
+    res.status(500);
+    throw new Error("Failed to upload avatar");
   }
 
   const updatedUser = await user.save();
