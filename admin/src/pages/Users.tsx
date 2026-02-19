@@ -472,7 +472,7 @@ const Users = () => {
                 <Select
                   defaultValue={formEdit.getValues("role")}
                   onValueChange={(value) =>
-                    setValue("role", value as FormData["role"])
+                    formEdit.setValue("role", value as editFormData["role"])
                   }
                 >
                   <SelectTrigger>
