@@ -103,12 +103,12 @@ const Users = () => {
       // Handle paginated and non-paginated response
       if (response.data) {
         setUsers(response.data);
-        // setTotal(response.data.total || response.data.users.length);
-        // setTotalPages(response.data.totalPages || 1);
+        setTotal(response.data.total || response.data.users.length);
+        setTotalPage(response.data.totalPages || 1);
       } else {
         setUsers(response.data);
-        // setTotal(response.data.length);
-        // setTotalPages();
+        setTotal(response.data.length);
+        setTotalPage(1);
       }
 
     } catch (error) {
@@ -190,12 +190,13 @@ const Users = () => {
     }
   };
 
-  const filteredUser = users.filter((user)=> {
+  // Filter users based on search term and role filter
+  const filteredUser = users.filter((user) => {
     const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
     return matchesSearch && matchesRole;
-  }) 
+  })
 
   useEffect(() => {
     fetchUsers();
@@ -279,6 +280,7 @@ const Users = () => {
     setIsViewModalOpen(true);
   }
 
+
   return (
     <div className="p-6 space-y-4">
       <div className="flex justify-between items-center">
@@ -289,7 +291,7 @@ const Users = () => {
         <div className="flex items-center gap-4 ">
           <div className="text-blue-600 flex items-center gap-1">
             <Users2 className="w-8 h-8" />
-            <p className="text-2xl font-bold">{users?.length}</p>
+            <p className="text-2xl font-bold">{total}</p> 
           </div>
           <Button
             variant={"outline"}
